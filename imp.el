@@ -94,14 +94,14 @@ If INTERACTIVE is non-nil, copy invite string to clipboard, else return it."
         (message "IMP Invite %s copied to clipboard" invite)))))
 
 ;;;###autoload
-(defun imp-accept-invite (invite)
-  "Accept INVITE."
-  (interactive "sInvite code: ")
+(defun imp-accept-invite (invite &optional name)
+  "Accept INVITE to channel as NAME."
+  (interactive "sInvite code: \nsName: ")
   (let* ((tokens (split-string (string-trim invite) "@"))
          (channel (car tokens))
          (key (cadr tokens)))
     (unless (and (string-prefix-p "#" channel) key) (user-error "Malformed invite"))
-    (imp-client channel key)))
+    (imp-client channel key name)))
 
 (provide 'imp)
 ;;; imp.el ends here
