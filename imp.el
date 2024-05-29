@@ -65,18 +65,21 @@
     (run-hook-with-args 'imp-message-functions response)))
 
 ;;;###autoload
-(defun imp-client (&optional name key interactive)
-  "Join an imp server with NAME and KEY.
-If Server does not exist, it will be created.
+(defun imp-client (&optional channel key name interactive)
+  "Join an imp server on CHANNEL with KEY and NAME.
+If CHANNEL does not exist, it will be created.
 If INTERACTIVE is non-nil, copy invite string to clipboard, else return it."
-  (interactive (list (read-string "Server Name: ") (read-string "Password: ") t))
+  (interactive (list (read-string "Server Channel: ")
+                     (read-string "Password: ")
+                     (read-string "Name: ")
+                     t))
   (let* ((seed (random 1000000))
-         (channel (if (or (null name) (string-empty-p name)) (format "#imp-server-%d" seed) name))
+         (channel (if (or (null channel) (string-empty-p channel)) (format "#imp-server-%d" seed) channel))
          (key (if (or (null key) (string-empty-p key)) (imp--key) key))
-         (imp (format "imp-%d" seed))
+         (name (if (or (null name) (string-empty-p name)) (format "imp-%d" seed) name))
          (invite (format "%s@%s" channel key)))
     (with-current-buffer (erc :server erc-default-server :port erc-default-port
-                              :nick imp)
+                              :nick name)
       (add-hook 'erc-after-connect (lambda (&rest _) (erc-join-channel channel key)) nil t)
       (add-hook 'erc-join-hook
                 (lambda () (when (string= (buffer-name) channel)
