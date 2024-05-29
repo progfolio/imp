@@ -94,7 +94,7 @@ If INTERACTIVE is non-nil, copy invite string to clipboard, else return it."
 (defun imp-accept-invite (invite)
   "Accept INVITE."
   (interactive "sInvite code: ")
-  (let* ((tokens (split-string invite "@"))
+  (let* ((tokens (split-string (string-trim invite) "@"))
          (channel (car tokens))
          (key (cadr tokens)))
     (unless (and (string-prefix-p "#" channel) key) (user-error "Malformed invite"))
