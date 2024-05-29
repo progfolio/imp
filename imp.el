@@ -61,8 +61,8 @@
   "Broadcast message."
   (goto-char (point-min))
   (erc-find-parsed-property)
-  (run-hook-with-args 'imp-message-functions
-                      (erc-get-parsed-vector (point))))
+  (when-let ((response (erc-get-parsed-vector (point))))
+    (run-hook-with-args 'imp-message-functions response)))
 
 ;;;###autoload
 (defun imp-client (&optional name key interactive)
