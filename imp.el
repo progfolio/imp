@@ -34,6 +34,7 @@
 
 (defvar-local imp-channel-name nil)
 (defvar-local imp-channel-key nil)
+(defvar-local imp-name nil)
 
 (defun imp--key ()
   "Return a key."
@@ -83,7 +84,9 @@ If INTERACTIVE is non-nil, copy invite string to clipboard, else return it."
       (add-hook 'erc-after-connect (lambda (&rest _) (erc-join-channel channel key)) nil t)
       (add-hook 'erc-join-hook
                 (lambda () (when (string= (buffer-name) channel)
-                             (setq-local imp-channel-name channel imp-channel-key key)
+                             (setq-local imp-channel-name channel
+                                         imp-channel-key key
+                                         imp-name name)
                              (erc-set-channel-key key)
                              (run-hooks 'imp-server-hook)
                              (add-hook 'erc-insert-modify-hook #'imp--broadcast nil t)))))
