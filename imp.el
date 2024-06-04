@@ -36,9 +36,16 @@
 (defvar-local imp-channel-key nil)
 (defvar-local imp-name nil)
 
+
+;;@TODO: player-join hook
+;;@TODO: player-leave hook
+;;@TODO: server-quit hook
+;;@MAYBE: defined message format?
+
 (defun imp--key ()
   "Return a key."
   (let ((digits))
+    (random t)
     (dotimes (_ 6) (push (number-to-string (random 10)) digits))
     (string-join digits)))
 
