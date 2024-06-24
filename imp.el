@@ -59,7 +59,7 @@
                       (erc-response.sender response)
                       (erc-response.contents response))))))
 
-(defcustom imp-message-functions '(imp--log-message)
+(defcustom imp-message-functions nil
   "Abnormal hook when imp server recives a message." :type 'hook)
 
 (defcustom imp-server-hook nil
