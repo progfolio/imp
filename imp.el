@@ -93,7 +93,10 @@ If INTERACTIVE is non-nil, copy invite string to clipboard, else return it."
                 (lambda () (when (string= (buffer-name) channel)
                              (setq-local imp-channel-name channel
                                          imp-channel-key key
-                                         imp-name name)
+                                         imp-name name
+                                         erc-inerpret-controls-p nil
+                                         erc-flood-protect nil
+                                         erc-server-flood-penalty 0)
                              (erc-set-channel-key key)
                              (run-hooks 'imp-server-hook)
                              (add-hook 'erc-insert-modify-hook #'imp--broadcast nil t)))))
