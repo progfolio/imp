@@ -82,9 +82,9 @@ If INTERACTIVE is non-nil, copy invite string to clipboard, else return it."
                      (read-string "Name: ")
                      t))
   (let* ((seed (random 1000000))
-         (channel (if (or (null channel) (string-empty-p channel)) (format "#imp-server-%d" seed) channel))
-         (key (if (or (null key) (string-empty-p key)) (imp--key) key))
-         (name (if (or (null name) (string-empty-p name)) (format "imp-%d" seed) name))
+         (channel (if (zerop (length channel)) (format "#imp-server-%d" seed) channel))
+         (key (if (zerop (length key)) (imp--key) key))
+         (name (if (zerop (length name)) (format "imp-%d" seed) name))
          (invite (format "%s@%s" channel key)))
     (with-current-buffer (erc :server erc-default-server :port erc-default-port
                               :nick name)
